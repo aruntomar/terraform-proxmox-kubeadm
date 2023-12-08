@@ -76,13 +76,6 @@ variable "disk_type" {
   type        = string
 }
 
-
-variable "kubeconfig_filepath" {
-  default     = "~/.kube/configs/pve"
-  description = "location of the kubeconfig file"
-  type        = string
-}
-
 variable "k8s_node_count" {
   default     = 3
   description = "k8s node count for k8s cluster"
