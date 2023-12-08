@@ -70,10 +70,21 @@ variable "cpu_type" {
   type        = string
 }
 
+variable "ctrl_vmid" {
+  default     = 500
+  description = "vm id k8s controller vm"
+  type        = number
+}
+
 variable "disk_type" {
   default     = "scsi"
   description = "type of virtual hd for vm"
   type        = string
+}
+
+variable "k8s_controller_ip" {
+  description = "IP address of kubernetes controller"
+  type = string
 }
 
 variable "k8s_node_count" {
@@ -100,6 +111,11 @@ variable "network_model" {
   type        = string
 }
 
+variable "network_gateway" {
+  description = "Gateway ip for kubernetes controller"
+  type = string
+}
+
 variable "onboot" {
   default     = true
   description = "should vm boot on host boot"
@@ -115,17 +131,12 @@ variable "os_type" {
 variable "pod_network_cidr" {
   default     = "10.244.0.0/16"
   description = "pod network cidr"
+  type = string
 }
 
 variable "qemu_os" {
   default     = "l26"
   description = "qemu os type. default to linux 2.6+"
-  type        = string
-}
-
-variable "target_node" {
-  default     = "pve"
-  description = "name of the target node"
   type        = string
 }
 
@@ -153,8 +164,14 @@ variable "storage" {
   type        = string
 }
 
-variable "ctrl_vmid" {
-  default     = 500
-  description = "vm id k8s controller vm"
-  type        = number
+variable "subnet_mask" {
+  description = "Subnet mask for the local network"
+  type = number
 }
+
+variable "target_node" {
+  default     = "pve"
+  description = "name of the target node"
+  type        = string
+}
+

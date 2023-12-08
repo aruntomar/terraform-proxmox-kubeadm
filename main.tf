@@ -25,7 +25,7 @@ resource "proxmox_vm_qemu" "k8s-ctrlr" {
   os_type = local.os_type
 
   #cloud-init config
-  ipconfig0  = "ip=172.17.9.3/24,gw=172.17.9.1"
+  ipconfig0  = "ip=${var.k8s_controller_ip}/${var.subnet_mask},gw=${var.network_gateway}"
   nameserver = local.nameserver
   ciuser     = local.ci_user
   cicustom   = local.ci_custom
@@ -62,6 +62,10 @@ data "external" "join_cmd" {
   depends_on = [proxmox_vm_qemu.k8s-ctrlr]
 }
 
+locals {
+  starting_ip = split(".", var.k8s_controller_ip)
+}
+
 # deploy k8s nodes.
 resource "proxmox_vm_qemu" "k8s-node" {
   name        = "k8s-node-${count.index + 1}"
@@ -90,7 +94,8 @@ resource "proxmox_vm_qemu" "k8s-node" {
   os_type = local.os_type
 
   #cloud-init config
-  ipconfig0  = "ip=172.17.9.${5 + count.index}/24,gw=172.17.9.1"
+ 
+  ipconfig0  = "ip=${ cidrhost("${var.k8s_controller_ip}/${var.subnet_mask}", element(local.starting_ip, length(local.starting_ip) - 1) + count.index + 1)}/${var.subnet_mask},gw=${var.network_gateway}"
   nameserver = local.nameserver
   ciuser     = local.ci_user
   cicustom   = local.ci_custom
