@@ -84,7 +84,7 @@ variable "disk_type" {
 
 variable "k8s_controller_ip" {
   description = "IP address of kubernetes controller"
-  type = string
+  type        = string
 }
 
 variable "k8s_node_count" {
@@ -113,7 +113,7 @@ variable "network_model" {
 
 variable "network_gateway" {
   description = "Gateway ip for kubernetes controller"
-  type = string
+  type        = string
 }
 
 variable "onboot" {
@@ -131,7 +131,7 @@ variable "os_type" {
 variable "pod_network_cidr" {
   default     = "10.244.0.0/16"
   description = "pod network cidr"
-  type = string
+  type        = string
 }
 
 variable "qemu_os" {
@@ -166,7 +166,7 @@ variable "storage" {
 
 variable "subnet_mask" {
   description = "Subnet mask for the local network"
-  type = number
+  type        = number
 }
 
 variable "target_node" {
